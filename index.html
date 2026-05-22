@@ -1,33 +1,44 @@
-<!DOCTYPE html>
-<html lang="tr">
+Anladım, kodlama bilmediğin için bunu **tek HTML dosyası** olarak hazırlayacağım. Sadece eski `index.html` yerine bu yeni dosyayı GitHub'a yükleyeceksin, başka hiçbir şey yapmaya gerek yok.
+
+Şimdi kapsamlı bir upgrade yapıyorum: TR/EN dil seçici, yeni bölümler (kurulum adımları, SSS, sesli komut örnekleri, changelog, iletişim) ve daha sinematik tasarım eklenecek.
+Action: file_editor create /app/index.html --file-text "<!DOCTYPE html>
+<html lang=\"tr\">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset=\"UTF-8\">
+<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
 <title>JARVIS AI Windows — Aras Berk Yalabık | Sesli AI Asistan</title>
-<meta name="description" content="Aras Berk Yalabık tarafından yapılan JARVIS AI Windows asistanı. Sesli komutlarla Windows kontrolü, Gemini AI destekli kişisel asistan. Ücretsiz indir.">
-<meta name="keywords" content="JARVIS AI Windows, Aras Berk Yalabık, jarvis yapay zeka, sesli asistan Windows, Gemini AI asistan, JARVIS indir, jarvis ai türkçe, aras berk jarvis, jarvis windows asistan, yapay zeka asistan indir">
-<meta name="author" content="Aras Berk Yalabık">
-<meta property="og:title" content="JARVIS AI Windows — Aras Berk Yalabık">
-<meta property="og:description" content="Sesli komutlarla Windows kontrolü. Gemini AI destekli kişisel asistan. Ücretsiz indir.">
-<meta property="og:url" content="https://arbeya123.github.io/jarvis-windows">
-<meta property="og:type" content="website">
-<meta name="robots" content="index, follow">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name=\"description\" content=\"Aras Berk Yalabık tarafından yapılan JARVIS AI Windows asistanı. Sesli komutlarla Windows kontrolü, Gemini AI destekli kişisel asistan. Ücretsiz indir.\">
+<meta name=\"keywords\" content=\"JARVIS AI Windows, Aras Berk Yalabık, jarvis yapay zeka, sesli asistan Windows, Gemini AI asistan, JARVIS indir, jarvis ai türkçe, aras berk jarvis, jarvis windows asistan, yapay zeka asistan indir\">
+<meta name=\"author\" content=\"Aras Berk Yalabık\">
+<meta property=\"og:title\" content=\"JARVIS AI Windows — Aras Berk Yalabık\">
+<meta property=\"og:description\" content=\"Sesli komutlarla Windows kontrolü. Gemini AI destekli kişisel asistan. Ücretsiz indir.\">
+<meta property=\"og:url\" content=\"https://arbeya123.github.io/jarvis-windows\">
+<meta property=\"og:type\" content=\"website\">
+<meta name=\"robots\" content=\"index, follow\">
+<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">
+<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>
+<link href=\"https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap\" rel=\"stylesheet\">
+<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css\">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
     --cyan: #00d4ff;
     --cyan2: #00aacc;
+    --cyan3: #66e7ff;
+    --amber: #ffb547;
+    --red: #ff5f57;
     --dark: #020c14;
     --dark2: #041824;
     --dark3: #061e2e;
+    --dark4: #082638;
     --glass: rgba(0,212,255,0.05);
     --glass2: rgba(0,212,255,0.10);
     --border: rgba(0,212,255,0.25);
     --border2: rgba(0,212,255,0.12);
     --text: #cce8f4;
     --text2: #7ab8d0;
+    --text3: rgba(122,184,208,0.5);
   }
 
   html { scroll-behavior: smooth; }
@@ -38,20 +49,21 @@
     font-family: 'Rajdhani', sans-serif;
     font-size: 16px;
     overflow-x: hidden;
+    cursor: default;
   }
 
-  /* ─── NOISE OVERLAY ─── */
+  ::selection { background: var(--cyan); color: #000; }
+
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    background-image: url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E\");
     pointer-events: none;
     z-index: 0;
     opacity: 0.4;
   }
 
-  /* ─── GRID BACKGROUND ─── */
   .grid-bg {
     position: fixed;
     inset: 0;
@@ -61,6 +73,21 @@
     background-size: 60px 60px;
     pointer-events: none;
     z-index: 0;
+    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0.3) 100%);
+  }
+
+  /* Custom cursor glow */
+  .cursor-glow {
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s;
+    mix-blend-mode: screen;
   }
 
   /* ─── NAV ─── */
@@ -68,12 +95,13 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
-    padding: 18px 5%;
+    padding: 16px 5%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: rgba(2,12,20,0.85);
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border2);
   }
 
@@ -84,26 +112,92 @@
     color: var(--cyan);
     letter-spacing: 4px;
     text-decoration: none;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
 
-  .nav-logo span { color: var(--text2); font-weight: 400; font-size: 12px; letter-spacing: 2px; display: block; }
+  .nav-logo-icon {
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .nav-logo-icon::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 12px var(--cyan);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .nav-logo-text span { color: var(--text2); font-weight: 400; font-size: 10px; letter-spacing: 2px; display: block; margin-top: 2px; }
+
+  .nav-right { display: flex; align-items: center; gap: 24px; }
 
   nav ul {
     display: flex;
-    gap: 32px;
+    gap: 28px;
     list-style: none;
   }
 
   nav ul a {
     color: var(--text2);
     text-decoration: none;
-    font-size: 13px;
+    font-size: 12px;
     letter-spacing: 2px;
     text-transform: uppercase;
     transition: color 0.2s;
+    position: relative;
   }
-
+  nav ul a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--cyan);
+    transition: width 0.25s;
+  }
   nav ul a:hover { color: var(--cyan); }
+  nav ul a:hover::after { width: 100%; }
+
+  .lang-switch {
+    display: flex;
+    border: 1px solid var(--border2);
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .lang-btn {
+    background: transparent;
+    border: none;
+    color: var(--text2);
+    padding: 6px 12px;
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .lang-btn.active {
+    background: var(--cyan);
+    color: #000;
+  }
+  .lang-btn:not(.active):hover { color: var(--cyan); }
+
+  .burger {
+    display: none;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--cyan);
+    width: 38px; height: 38px;
+    cursor: pointer;
+    font-size: 16px;
+  }
 
   /* ─── HERO ─── */
   .hero {
@@ -112,12 +206,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 120px 5% 80px;
+    padding: 140px 5% 80px;
     overflow: hidden;
     z-index: 1;
   }
 
-  /* HUD RINGS */
   .hud-ring {
     position: absolute;
     border-radius: 50%;
@@ -125,43 +218,55 @@
     animation: spin linear infinite;
     pointer-events: none;
   }
-
   .hud-ring:nth-child(1) {
     width: 500px; height: 500px;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    border-color: rgba(0,212,255,0.08);
+    border-color: rgba(0,212,255,0.10);
     animation-duration: 30s;
   }
   .hud-ring:nth-child(2) {
-    width: 700px; height: 700px;
+    width: 720px; height: 720px;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    border-color: rgba(0,212,255,0.05);
+    border-color: rgba(0,212,255,0.06);
     animation-duration: 50s;
     animation-direction: reverse;
   }
   .hud-ring:nth-child(3) {
-    width: 900px; height: 900px;
+    width: 940px; height: 940px;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    border-color: rgba(0,212,255,0.03);
+    border-color: rgba(0,212,255,0.04);
     animation-duration: 70s;
   }
 
-  /* RING DASHES */
   .hud-ring-dash {
     position: absolute;
     width: 600px; height: 600px;
     top: 50%; left: 50%;
     margin: -300px 0 0 -300px;
     border-radius: 50%;
-    border: 1px dashed rgba(0,212,255,0.12);
+    border: 1px dashed rgba(0,212,255,0.14);
     animation: spin 20s linear infinite reverse;
     pointer-events: none;
   }
 
-  /* RADAR SWEEP */
+  .hud-ring-tick {
+    position: absolute;
+    width: 820px; height: 820px;
+    top: 50%; left: 50%;
+    margin: -410px 0 0 -410px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    background-image:
+      conic-gradient(from 0deg, transparent 0deg, transparent 358deg, rgba(0,212,255,0.4) 358deg, rgba(0,212,255,0.4) 360deg);
+    -webkit-mask: radial-gradient(circle, transparent calc(50% - 8px), #000 calc(50% - 8px), #000 50%, transparent 50%);
+            mask: radial-gradient(circle, transparent calc(50% - 8px), #000 calc(50% - 8px), #000 50%, transparent 50%);
+    animation: spin 6s steps(12) infinite;
+    pointer-events: none;
+  }
+
   .radar-sweep {
     position: absolute;
     width: 500px; height: 500px;
@@ -172,7 +277,6 @@
     animation: spin 4s linear infinite;
     pointer-events: none;
   }
-
   .radar-sweep::after {
     content: '';
     position: absolute;
@@ -180,7 +284,7 @@
     background: conic-gradient(
       from 0deg,
       transparent 0deg,
-      rgba(0,212,255,0.12) 60deg,
+      rgba(0,212,255,0.14) 60deg,
       transparent 60deg
     );
   }
@@ -190,28 +294,75 @@
     to   { transform: translate(-50%,-50%) rotate(360deg); }
   }
 
+  /* Floating data points around hero */
+  .data-point {
+    position: absolute;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: rgba(0,212,255,0.4);
+    padding: 4px 10px;
+    border: 1px solid rgba(0,212,255,0.15);
+    background: rgba(2,12,20,0.5);
+    backdrop-filter: blur(4px);
+    pointer-events: none;
+    animation: floatY 6s ease-in-out infinite;
+  }
+  .data-point::before {
+    content: '';
+    position: absolute;
+    width: 6px; height: 6px;
+    background: var(--cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--cyan);
+  }
+  .dp-1 { top: 18%; left: 8%; }
+  .dp-1::before { top: 50%; right: -14px; transform: translateY(-50%); }
+  .dp-2 { top: 30%; right: 6%; animation-delay: 1s; }
+  .dp-2::before { top: 50%; left: -14px; transform: translateY(-50%); }
+  .dp-3 { bottom: 26%; left: 10%; animation-delay: 2s; }
+  .dp-3::before { top: 50%; right: -14px; transform: translateY(-50%); }
+  .dp-4 { bottom: 18%; right: 8%; animation-delay: 3s; }
+  .dp-4::before { top: 50%; left: -14px; transform: translateY(-50%); }
+
+  @keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
   .hero-content {
     position: relative;
     z-index: 2;
     text-align: center;
-    max-width: 800px;
+    max-width: 880px;
   }
 
   .hero-tag {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     font-size: 11px;
     letter-spacing: 4px;
     text-transform: uppercase;
     color: var(--cyan);
     border: 1px solid var(--border);
-    padding: 6px 18px;
+    padding: 8px 18px;
     margin-bottom: 32px;
+    background: rgba(0,212,255,0.04);
     animation: fadeUp 0.8s ease 0.2s both;
   }
+  .hero-tag .live-dot {
+    width: 6px; height: 6px;
+    background: #4cff8c;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #4cff8c;
+    animation: blink 1.4s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
   .hero-title {
     font-family: 'Orbitron', monospace;
-    font-size: clamp(52px, 10vw, 96px);
+    font-size: clamp(52px, 10vw, 104px);
     font-weight: 900;
     line-height: 1;
     letter-spacing: 8px;
@@ -219,7 +370,6 @@
     text-shadow: 0 0 60px rgba(0,212,255,0.4);
     animation: fadeUp 0.8s ease 0.4s both;
   }
-
   .hero-title span { color: var(--cyan); }
 
   .hero-sub {
@@ -229,14 +379,23 @@
     color: var(--text2);
     text-transform: uppercase;
     animation: fadeUp 0.8s ease 0.5s both;
+    font-family: 'JetBrains Mono', monospace;
   }
+  .hero-sub .cursor-bar {
+    display: inline-block;
+    width: 10px;
+    background: var(--cyan);
+    margin-left: 2px;
+    animation: cursorBlink 1s steps(2) infinite;
+  }
+  @keyframes cursorBlink { 50% { opacity: 0; } }
 
   .hero-desc {
     margin-top: 28px;
     font-size: 18px;
     line-height: 1.7;
     color: var(--text2);
-    max-width: 560px;
+    max-width: 580px;
     margin-left: auto;
     margin-right: auto;
     animation: fadeUp 0.8s ease 0.6s both;
@@ -254,7 +413,7 @@
   .btn {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     padding: 14px 32px;
     font-family: 'Rajdhani', sans-serif;
     font-size: 14px;
@@ -263,35 +422,49 @@
     text-transform: uppercase;
     text-decoration: none;
     cursor: pointer;
-    transition: all 0.25s;
+    transition: transform 0.25s, box-shadow 0.25s, background 0.25s, color 0.25s;
     border: none;
+    position: relative;
+    overflow: hidden;
   }
 
   .btn-primary {
     background: var(--cyan);
     color: #000;
   }
-
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.5s;
+  }
   .btn-primary:hover {
     background: #fff;
     transform: translateY(-2px);
     box-shadow: 0 0 30px rgba(0,212,255,0.5);
   }
+  .btn-primary:hover::after { left: 100%; }
 
   .btn-outline {
     background: transparent;
     color: var(--cyan);
     border: 1px solid var(--border);
   }
-
   .btn-outline:hover {
     background: var(--glass2);
     transform: translateY(-2px);
+    border-color: var(--cyan);
   }
 
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.05); }
   }
 
   /* ─── STATS BAR ─── */
@@ -303,7 +476,6 @@
     background: rgba(4,24,36,0.7);
     backdrop-filter: blur(8px);
   }
-
   .stats-bar-inner {
     max-width: 1100px;
     margin: 0 auto;
@@ -311,16 +483,23 @@
     display: flex;
     align-items: stretch;
   }
-
   .stat-item {
     flex: 1;
     padding: 32px 24px;
     text-align: center;
     border-right: 1px solid var(--border2);
+    position: relative;
   }
-
   .stat-item:last-child { border-right: none; }
-
+  .stat-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    width: 0; height: 2px;
+    background: var(--cyan);
+    transition: width 0.4s, left 0.4s;
+  }
+  .stat-item:hover::after { width: 100%; left: 0; }
   .stat-num {
     font-family: 'Orbitron', monospace;
     font-size: 36px;
@@ -328,7 +507,6 @@
     color: var(--cyan);
     line-height: 1;
   }
-
   .stat-label {
     margin-top: 8px;
     font-size: 11px;
@@ -350,6 +528,7 @@
     text-transform: uppercase;
     color: var(--cyan);
     margin-bottom: 16px;
+    font-family: 'JetBrains Mono', monospace;
   }
 
   .section-title {
@@ -365,10 +544,10 @@
     font-size: 17px;
     line-height: 1.8;
     color: var(--text2);
-    max-width: 560px;
+    max-width: 580px;
   }
 
-  .max-w { max-width: 1100px; margin: 0 auto; }
+  .max-w { max-width: 1140px; margin: 0 auto; }
 
   /* ─── FEATURES ─── */
   .features-grid {
@@ -384,14 +563,13 @@
     padding: 36px 32px;
     position: relative;
     overflow: hidden;
-    transition: border-color 0.3s, background 0.3s;
+    transition: border-color 0.3s, background 0.3s, transform 0.3s;
   }
-
   .feature-card:hover {
     border-color: var(--border);
     background: var(--dark3);
+    transform: translateY(-4px);
   }
-
   .feature-card::before {
     content: '';
     position: absolute;
@@ -401,20 +579,27 @@
     opacity: 0;
     transition: opacity 0.3s;
   }
-
   .feature-card:hover::before { opacity: 1; }
 
-  .feature-icon {
+  .feature-icon-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .feature-num {
     font-family: 'Orbitron', monospace;
     font-size: 11px;
     letter-spacing: 2px;
     color: var(--cyan);
     border: 1px solid var(--border);
     padding: 4px 10px;
-    display: inline-block;
-    margin-bottom: 20px;
   }
-
+  .feature-icon {
+    color: var(--cyan);
+    font-size: 18px;
+    opacity: 0.7;
+  }
   .feature-title {
     font-family: 'Orbitron', monospace;
     font-size: 15px;
@@ -423,11 +608,65 @@
     margin-bottom: 12px;
     letter-spacing: 1px;
   }
-
   .feature-desc {
     font-size: 15px;
     line-height: 1.7;
     color: var(--text2);
+  }
+
+  /* ─── VOICE COMMANDS ─── */
+  .voice-commands {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  .vc-card {
+    border: 1px solid var(--border2);
+    background: var(--dark2);
+    padding: 22px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: border-color 0.25s, background 0.25s;
+    cursor: pointer;
+  }
+  .vc-card:hover {
+    border-color: var(--border);
+    background: var(--dark3);
+  }
+  .vc-mic {
+    flex-shrink: 0;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cyan);
+    font-size: 14px;
+    background: rgba(0,212,255,0.04);
+  }
+  .vc-content { flex: 1; min-width: 0; }
+  .vc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .vc-text {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .vc-result {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.5;
+    padding-left: 12px;
+    border-left: 1px solid var(--border2);
   }
 
   /* ─── DEMO SCREEN ─── */
@@ -438,7 +677,6 @@
     position: relative;
     overflow: hidden;
   }
-
   .demo-topbar {
     display: flex;
     align-items: center;
@@ -447,12 +685,10 @@
     border-bottom: 1px solid var(--border2);
     background: var(--dark3);
   }
-
   .dot { width: 10px; height: 10px; border-radius: 50%; }
   .dot-red { background: #ff5f57; }
   .dot-yellow { background: #febc2e; }
   .dot-green { background: #28c840; }
-
   .demo-topbar-title {
     margin-left: 12px;
     font-family: 'Orbitron', monospace;
@@ -460,18 +696,34 @@
     letter-spacing: 3px;
     color: var(--text2);
   }
+  .demo-status {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #4cff8c;
+    letter-spacing: 2px;
+  }
+  .demo-status::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #4cff8c;
+    box-shadow: 0 0 8px #4cff8c;
+    animation: blink 1.4s ease-in-out infinite;
+  }
 
   .demo-screen {
     aspect-ratio: 16/9;
-    background: #000;
+    background: radial-gradient(ellipse at center, #021824 0%, #000 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     overflow: hidden;
   }
-
-  /* Animated placeholder HUD */
   .demo-hud {
     position: absolute;
     inset: 0;
@@ -479,7 +731,6 @@
     align-items: center;
     justify-content: center;
   }
-
   .demo-orb {
     width: 120px;
     height: 120px;
@@ -487,8 +738,8 @@
     border: 2px solid var(--cyan);
     position: relative;
     animation: pulse 2s ease-in-out infinite;
+    background: radial-gradient(circle, rgba(0,212,255,0.15), transparent 70%);
   }
-
   .demo-orb::before, .demo-orb::after {
     content: '';
     position: absolute;
@@ -496,32 +747,24 @@
     border: 1px solid rgba(0,212,255,0.3);
     animation: pulse 2s ease-in-out infinite;
   }
-
   .demo-orb::before { inset: -20px; animation-delay: 0.4s; }
   .demo-orb::after  { inset: -40px; animation-delay: 0.8s; }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.6; transform: scale(1.05); }
-  }
 
   .demo-ring1 {
     position: absolute;
     width: 260px; height: 260px;
     border-radius: 50%;
     border: 1px solid rgba(0,212,255,0.15);
-    animation: spin2 8s linear infinite;
+    animation: spinSimple 8s linear infinite;
   }
-
   .demo-ring2 {
     position: absolute;
     width: 360px; height: 360px;
     border-radius: 50%;
-    border: 1px dashed rgba(0,212,255,0.08);
-    animation: spin2 14s linear infinite reverse;
+    border: 1px dashed rgba(0,212,255,0.10);
+    animation: spinSimple 14s linear infinite reverse;
   }
-
-  @keyframes spin2 {
+  @keyframes spinSimple {
     from { transform: rotate(0deg); }
     to   { transform: rotate(360deg); }
   }
@@ -538,7 +781,6 @@
     );
     animation: scanMove 6s linear infinite;
   }
-
   @keyframes scanMove {
     0%   { transform: translateY(-100%); }
     100% { transform: translateY(100%); }
@@ -550,30 +792,206 @@
     font-family: 'Orbitron', monospace;
     font-size: 12px;
     letter-spacing: 4px;
-    color: rgba(0,212,255,0.5);
+    color: rgba(0,212,255,0.6);
   }
 
   .demo-corner {
     position: absolute;
     width: 20px; height: 20px;
   }
-
   .demo-corner-tl { top: 16px; left: 16px; border-top: 1px solid var(--cyan); border-left: 1px solid var(--cyan); }
   .demo-corner-tr { top: 16px; right: 16px; border-top: 1px solid var(--cyan); border-right: 1px solid var(--cyan); }
   .demo-corner-bl { bottom: 16px; left: 16px; border-bottom: 1px solid var(--cyan); border-left: 1px solid var(--cyan); }
   .demo-corner-br { bottom: 16px; right: 16px; border-bottom: 1px solid var(--cyan); border-right: 1px solid var(--cyan); }
 
+  .demo-stats-row {
+    position: absolute;
+    top: 24px;
+    left: 50px; right: 50px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(0,212,255,0.5);
+    letter-spacing: 1px;
+  }
+
+  /* ─── INSTALL STEPS ─── */
+  .steps-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    position: relative;
+  }
+  .step-card {
+    border: 1px solid var(--border2);
+    background: var(--dark2);
+    padding: 32px 28px;
+    position: relative;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .step-card:hover {
+    border-color: var(--border);
+    transform: translateY(-4px);
+  }
+  .step-number {
+    font-family: 'Orbitron', monospace;
+    font-size: 56px;
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--cyan);
+    line-height: 1;
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+  .step-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+  }
+  .step-desc {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--text2);
+  }
+  .step-desc a {
+    color: var(--cyan);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--border);
+  }
+  .step-desc a:hover { color: #fff; border-color: #fff; }
+
+  /* ─── FAQ ─── */
+  .faq-list {
+    margin-top: 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .faq-item {
+    border: 1px solid var(--border2);
+    background: var(--dark2);
+    transition: border-color 0.3s;
+  }
+  .faq-item:hover { border-color: var(--border); }
+  .faq-item.open { border-color: var(--border); background: var(--dark3); }
+
+  .faq-q {
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--text);
+    padding: 22px 28px;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .faq-q::after {
+    content: '+';
+    color: var(--cyan);
+    font-size: 22px;
+    font-weight: 300;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    padding: 0 28px;
+    color: var(--text2);
+    font-size: 15.5px;
+    line-height: 1.75;
+  }
+  .faq-item.open .faq-a {
+    max-height: 500px;
+    padding: 0 28px 22px 28px;
+  }
+
+  /* ─── CHANGELOG ─── */
+  .changelog-list {
+    margin-top: 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    position: relative;
+    padding-left: 32px;
+    border-left: 1px solid var(--border2);
+  }
+  .cl-item {
+    position: relative;
+  }
+  .cl-item::before {
+    content: '';
+    position: absolute;
+    left: -38px;
+    top: 8px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--dark);
+    border: 2px solid var(--cyan);
+    box-shadow: 0 0 12px rgba(0,212,255,0.5);
+  }
+  .cl-version {
+    font-family: 'Orbitron', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--cyan);
+    letter-spacing: 2px;
+  }
+  .cl-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text2);
+    letter-spacing: 2px;
+    margin-left: 12px;
+    text-transform: uppercase;
+  }
+  .cl-list {
+    margin-top: 12px;
+    list-style: none;
+    padding: 0;
+  }
+  .cl-list li {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.7;
+    padding-left: 22px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+  .cl-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+  }
+
   /* ─── DOWNLOAD ─── */
   .download-box {
     margin-top: 64px;
     border: 1px solid var(--border);
-    background: linear-gradient(135deg, var(--dark2), var(--dark3));
-    padding: 60px;
+    background:
+      radial-gradient(ellipse at top left, rgba(0,212,255,0.08), transparent 50%),
+      linear-gradient(135deg, var(--dark2), var(--dark3));
+    padding: 64px;
     text-align: center;
     position: relative;
     overflow: hidden;
   }
-
   .download-box::before {
     content: '';
     position: absolute;
@@ -581,30 +999,48 @@
     height: 2px;
     background: linear-gradient(90deg, transparent, var(--cyan), transparent);
   }
+  .download-corners {
+    position: absolute; inset: 0;
+    pointer-events: none;
+  }
+  .download-corners::before, .download-corners::after,
+  .download-corners > span:nth-child(1), .download-corners > span:nth-child(2) {
+    content: '';
+    position: absolute;
+    width: 24px; height: 24px;
+    border-color: var(--cyan);
+    border-style: solid;
+    border-width: 0;
+  }
+  .download-corners::before { top: 12px; left: 12px; border-top-width: 1px; border-left-width: 1px; }
+  .download-corners::after { top: 12px; right: 12px; border-top-width: 1px; border-right-width: 1px; }
+  .download-corners > span:nth-child(1) { bottom: 12px; left: 12px; border-bottom-width: 1px; border-left-width: 1px; }
+  .download-corners > span:nth-child(2) { bottom: 12px; right: 12px; border-bottom-width: 1px; border-right-width: 1px; }
 
   .download-title {
     font-family: 'Orbitron', monospace;
-    font-size: 32px;
+    font-size: 36px;
     font-weight: 700;
     color: #fff;
     margin-bottom: 16px;
+    margin-top: 12px;
   }
-
   .download-desc {
     font-size: 17px;
     color: var(--text2);
     margin-bottom: 40px;
     line-height: 1.7;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
   }
-
   .download-meta {
-    margin-top: 28px;
+    margin-top: 32px;
     display: flex;
     gap: 32px;
     justify-content: center;
     flex-wrap: wrap;
   }
-
   .download-meta-item {
     font-size: 12px;
     letter-spacing: 2px;
@@ -614,12 +1050,12 @@
     align-items: center;
     gap: 8px;
   }
-
   .download-meta-item::before {
     content: '';
     width: 6px; height: 6px;
     border-radius: 50%;
     background: var(--cyan);
+    box-shadow: 0 0 8px var(--cyan);
   }
 
   /* ─── TECH STACK ─── */
@@ -629,21 +1065,87 @@
     flex-wrap: wrap;
     gap: 12px;
   }
-
   .tech-pill {
-    padding: 8px 18px;
+    padding: 10px 18px;
     border: 1px solid var(--border2);
     background: var(--glass);
     font-size: 13px;
     letter-spacing: 1px;
     color: var(--text2);
     transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
   }
-
+  .tech-pill i { color: var(--cyan); font-size: 14px; }
   .tech-pill:hover {
     border-color: var(--border);
     color: var(--cyan);
     background: var(--glass2);
+    transform: translateY(-2px);
+  }
+
+  /* ─── CONTACT ─── */
+  .contact-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .contact-card {
+    border: 1px solid var(--border2);
+    background: var(--dark2);
+    padding: 32px 28px;
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(0,212,255,0.10), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .contact-card:hover {
+    border-color: var(--cyan);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0,212,255,0.1);
+  }
+  .contact-card:hover::before { opacity: 1; }
+  .contact-icon {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cyan);
+    font-size: 20px;
+    background: rgba(0,212,255,0.04);
+    position: relative;
+    z-index: 1;
+  }
+  .contact-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--text2);
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+  }
+  .contact-handle {
+    font-size: 18px;
+    color: #fff;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+    word-break: break-all;
   }
 
   /* ─── FOOTER ─── */
@@ -651,40 +1153,66 @@
     position: relative;
     z-index: 1;
     border-top: 1px solid var(--border2);
-    padding: 48px 5%;
+    padding: 56px 5% 32px;
     text-align: center;
+    background: rgba(4,24,36,0.5);
   }
-
   .footer-logo {
     font-family: 'Orbitron', monospace;
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 900;
     color: var(--cyan);
-    letter-spacing: 6px;
+    letter-spacing: 8px;
+    text-shadow: 0 0 24px rgba(0,212,255,0.4);
   }
-
+  .footer-tagline {
+    margin-top: 8px;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--text2);
+    text-transform: uppercase;
+  }
+  .footer-socials {
+    margin-top: 28px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
+  .footer-socials a {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+    transition: all 0.25s;
+    font-size: 16px;
+  }
+  .footer-socials a:hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,212,255,0.2);
+  }
   .footer-credit {
-    margin-top: 20px;
-    font-size: 14px;
+    margin-top: 28px;
+    font-size: 13px;
     letter-spacing: 2px;
     color: var(--text2);
   }
-
   .footer-credit a {
     color: var(--cyan);
     text-decoration: none;
   }
-
   .footer-credit a:hover { text-decoration: underline; }
-
   .footer-copy {
-    margin-top: 12px;
-    font-size: 12px;
+    margin-top: 14px;
+    font-size: 11px;
     color: rgba(122,184,208,0.4);
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
   }
 
-  /* ─── SCANLINE ANIM ─── */
+  /* ─── SCANLINE ─── */
   .scanline {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -694,251 +1222,814 @@
     pointer-events: none;
     z-index: 999;
   }
-
   @keyframes scanDown {
     0%   { top: 0; opacity: 1; }
     90%  { top: 100vh; opacity: 0.5; }
     100% { top: 100vh; opacity: 0; }
   }
 
-  /* Reveal on scroll */
+  /* Reveal */
   .reveal {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.7s ease, transform 0.7s ease;
   }
-
   .reveal.visible {
     opacity: 1;
     transform: translateY(0);
   }
 
-  @media (max-width: 640px) {
+  /* Back to top */
+  .to-top {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: rgba(2,12,20,0.85);
+    backdrop-filter: blur(8px);
+    color: var(--cyan);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    font-size: 16px;
+  }
+  .to-top.show { opacity: 1; visibility: visible; }
+  .to-top:hover {
+    background: var(--cyan);
+    color: #000;
+    transform: translateY(-3px);
+  }
+
+  /* Mobile menu */
+  .mobile-menu {
+    position: fixed;
+    top: 0; right: -100%;
+    width: 80%; max-width: 320px;
+    height: 100vh;
+    background: var(--dark2);
+    border-left: 1px solid var(--border);
+    z-index: 101;
+    padding: 100px 32px 32px;
+    transition: right 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .mobile-menu.open { right: 0; }
+  .mobile-menu a {
+    color: var(--text);
+    text-decoration: none;
+    font-family: 'Orbitron', monospace;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border2);
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--cyan); }
+  .mobile-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+  }
+  .mobile-overlay.show { opacity: 1; visibility: visible; }
+
+  @media (max-width: 880px) {
     nav ul { display: none; }
+    .burger { display: flex; align-items: center; justify-content: center; }
+    .nav-logo-text span { display: none; }
     .stats-bar-inner { flex-wrap: wrap; }
     .stat-item { flex: 1 1 50%; border-right: none; border-bottom: 1px solid var(--border2); }
+    .stat-item:nth-child(2) { border-right: none; }
+    section { padding: 70px 5%; }
     .download-box { padding: 40px 24px; }
     .demo-ring2 { display: none; }
+    .data-point { display: none; }
+    .download-title { font-size: 28px; }
+  }
+  @media (max-width: 540px) {
+    .hero { padding: 120px 5% 60px; }
+    .hero-title { letter-spacing: 4px; }
+    .stat-num { font-size: 28px; }
   }
 </style>
 </head>
 <body>
 
-<div class="grid-bg"></div>
-<div class="scanline"></div>
+<div class=\"grid-bg\"></div>
+<div class=\"scanline\"></div>
+<div class=\"cursor-glow\" id=\"cursorGlow\"></div>
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">
-    JARVIS
-    <span>BY ARAS BERK YALABIK</span>
+  <a href=\"#\" class=\"nav-logo\">
+    <span class=\"nav-logo-icon\"></span>
+    <span class=\"nav-logo-text\">
+      JARVIS
+      <span data-i18n=\"nav.sub\">BY ARAS BERK YALABIK</span>
+    </span>
   </a>
-  <ul>
-    <li><a href="#features">Özellikler</a></li>
-    <li><a href="#demo">Demo</a></li>
-    <li><a href="#download">İndir</a></li>
-  </ul>
+  <div class=\"nav-right\">
+    <ul>
+      <li><a href=\"#features\" data-i18n=\"nav.features\">Özellikler</a></li>
+      <li><a href=\"#voice\" data-i18n=\"nav.voice\">Komutlar</a></li>
+      <li><a href=\"#install\" data-i18n=\"nav.install\">Kurulum</a></li>
+      <li><a href=\"#faq\" data-i18n=\"nav.faq\">SSS</a></li>
+      <li><a href=\"#contact\" data-i18n=\"nav.contact\">İletişim</a></li>
+    </ul>
+    <div class=\"lang-switch\" role=\"group\" aria-label=\"Language\">
+      <button class=\"lang-btn active\" data-lang=\"tr\" data-testid=\"lang-tr-btn\">TR</button>
+      <button class=\"lang-btn\" data-lang=\"en\" data-testid=\"lang-en-btn\">EN</button>
+    </div>
+    <button class=\"burger\" id=\"burger\" aria-label=\"Menu\" data-testid=\"mobile-menu-btn\">
+      <i class=\"fa-solid fa-bars\"></i>
+    </button>
+  </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hud-ring"></div>
-  <div class="hud-ring"></div>
-  <div class="hud-ring"></div>
-  <div class="hud-ring-dash"></div>
-  <div class="radar-sweep"></div>
+<!-- MOBILE MENU -->
+<div class=\"mobile-overlay\" id=\"mobileOverlay\"></div>
+<div class=\"mobile-menu\" id=\"mobileMenu\">
+  <a href=\"#features\" data-i18n=\"nav.features\">Özellikler</a>
+  <a href=\"#voice\" data-i18n=\"nav.voice\">Komutlar</a>
+  <a href=\"#install\" data-i18n=\"nav.install\">Kurulum</a>
+  <a href=\"#faq\" data-i18n=\"nav.faq\">SSS</a>
+  <a href=\"#changelog\" data-i18n=\"nav.changelog\">Sürümler</a>
+  <a href=\"#contact\" data-i18n=\"nav.contact\">İletişim</a>
+  <a href=\"#download\" data-i18n=\"nav.download\">İndir</a>
+</div>
 
-  <div class="hero-content">
-    <div class="hero-tag">AI Asistan Sistemi — v1.0</div>
-    <h1 class="hero-title">J<span>.</span>A<span>.</span>R<span>.</span>V<span>.</span>I<span>.</span>S</h1>
-    <div class="hero-sub">Just A Rather Very Intelligent System</div>
-    <p class="hero-desc">
+<!-- HERO -->
+<div class=\"hero\">
+  <div class=\"hud-ring\"></div>
+  <div class=\"hud-ring\"></div>
+  <div class=\"hud-ring\"></div>
+  <div class=\"hud-ring-dash\"></div>
+  <div class=\"hud-ring-tick\"></div>
+  <div class=\"radar-sweep\"></div>
+
+  <div class=\"data-point dp-1\">SYS::ONLINE</div>
+  <div class=\"data-point dp-2\">AI::GEMINI 2.5</div>
+  <div class=\"data-point dp-3\">LANG::TR-EN</div>
+  <div class=\"data-point dp-4\">VOICE::ACTIVE</div>
+
+  <div class=\"hero-content\">
+    <div class=\"hero-tag\">
+      <span class=\"live-dot\"></span>
+      <span data-i18n=\"hero.tag\">AI Asistan Sistemi — v1.3</span>
+    </div>
+    <h1 class=\"hero-title\">J<span>.</span>A<span>.</span>R<span>.</span>V<span>.</span>I<span>.</span>S</h1>
+    <div class=\"hero-sub\">
+      <span id=\"typer\">Just A Rather Very Intelligent System</span><span class=\"cursor-bar\">&nbsp;</span>
+    </div>
+    <p class=\"hero-desc\" data-i18n=\"hero.desc\">
       Windows üzerinde çalışan, sesli komutlarla kontrol edilen,
       yapay zeka destekli kişisel asistan. Gerçek zamanlı. Akıllı. Güçlü.
     </p>
-    <div class="hero-btns">
-      <a href="#download" class="btn btn-primary">
-        ↓ &nbsp; İndir — Windows
+    <div class=\"hero-btns\">
+      <a href=\"#download\" class=\"btn btn-primary\" data-testid=\"hero-download-btn\">
+        <i class=\"fa-solid fa-download\"></i>
+        <span data-i18n=\"hero.btnDownload\">İndir — Windows</span>
       </a>
-      <a href="#features" class="btn btn-outline">
-        Özellikleri Gör
+      <a href=\"#features\" class=\"btn btn-outline\" data-testid=\"hero-features-btn\">
+        <i class=\"fa-solid fa-circle-info\"></i>
+        <span data-i18n=\"hero.btnFeatures\">Özellikleri Gör</span>
       </a>
     </div>
   </div>
 </div>
 
 <!-- STATS -->
-<div class="stats-bar">
-  <div class="stats-bar-inner">
-    <div class="stat-item reveal">
-      <div class="stat-num">20+</div>
-      <div class="stat-label">Entegre Araç</div>
+<div class=\"stats-bar\">
+  <div class=\"stats-bar-inner\">
+    <div class=\"stat-item reveal\">
+      <div class=\"stat-num\" data-count=\"20\" data-suffix=\"+\">0+</div>
+      <div class=\"stat-label\" data-i18n=\"stats.tools\">Entegre Araç</div>
     </div>
-    <div class="stat-item reveal">
-      <div class="stat-num">Gemini</div>
-      <div class="stat-label">AI Motoru</div>
+    <div class=\"stat-item reveal\">
+      <div class=\"stat-num\">Gemini</div>
+      <div class=\"stat-label\" data-i18n=\"stats.engine\">AI Motoru</div>
     </div>
-    <div class="stat-item reveal">
-      <div class="stat-num">7/24</div>
-      <div class="stat-label">Aktif Dinleme</div>
+    <div class=\"stat-item reveal\">
+      <div class=\"stat-num\">7/24</div>
+      <div class=\"stat-label\" data-i18n=\"stats.listening\">Aktif Dinleme</div>
     </div>
-    <div class="stat-item reveal">
-      <div class="stat-num">TR</div>
-      <div class="stat-label">Türkçe Destek</div>
+    <div class=\"stat-item reveal\">
+      <div class=\"stat-num\">TR</div>
+      <div class=\"stat-label\" data-i18n=\"stats.lang\">Türkçe Destek</div>
     </div>
   </div>
 </div>
 
 <!-- FEATURES -->
-<section id="features">
-  <div class="max-w">
-    <div class="section-tag reveal">// Yetenekler</div>
-    <h2 class="section-title reveal">Tam Kontrol.<br>Tek Sesle.</h2>
-    <p class="section-desc reveal">
+<section id=\"features\">
+  <div class=\"max-w\">
+    <div class=\"section-tag reveal\">// <span data-i18n=\"features.tag\">Yetenekler</span></div>
+    <h2 class=\"section-title reveal\" data-i18n-html=\"features.title\">Tam Kontrol.<br>Tek Sesle.</h2>
+    <p class=\"section-desc reveal\" data-i18n=\"features.desc\">
       JARVIS yalnızca bir chatbot değil. Bilgisayarınızı, takviminizi,
       müziğinizi ve daha fazlasını sesli komutlarla yönetir.
     </p>
 
-    <div class="features-grid">
-      <div class="feature-card reveal">
-        <div class="feature-icon">01</div>
-        <div class="feature-title">Sesli Komut</div>
-        <p class="feature-desc">Gerçek zamanlı ses akışı. Mikrofonu açın, konuşun — JARVIS sizi duyuyor.</p>
+    <div class=\"features-grid\">
+      <div class=\"feature-card reveal\">
+        <div class=\"feature-icon-wrap\">
+          <div class=\"feature-num\">01</div>
+          <i class=\"fa-solid fa-microphone feature-icon\"></i>
+        </div>
+        <div class=\"feature-title\" data-i18n=\"f1.title\">Sesli Komut</div>
+        <p class=\"feature-desc\" data-i18n=\"f1.desc\">Gerçek zamanlı ses akışı. Mikrofonu açın, konuşun — JARVIS sizi duyuyor.</p>
       </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">02</div>
-        <div class="feature-title">Uygulama Kontrolü</div>
-        <p class="feature-desc">Spotify, Chrome, VS Code, Terminal — herhangi bir uygulamayı sesle açın.</p>
+      <div class=\"feature-card reveal\">
+        <div class=\"feature-icon-wrap\">
+          <div class=\"feature-num\">02</div>
+          <i class=\"fa-solid fa-window-restore feature-icon\"></i>
+        </div>
+        <div class=\"feature-title\" data-i18n=\"f2.title\">Uygulama Kontrolü</div>
+        <p class=\"feature-desc\" data-i18n=\"f2.desc\">Spotify, Chrome, VS Code, Terminal — herhangi bir uygulamayı sesle açın.</p>
       </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">03</div>
-        <div class="feature-title">Takvim & Hatırlatıcı</div>
-        <p class="feature-desc">Google Calendar ve Microsoft To-Do entegrasyonu. Randevu ekle, sil, sorgula.</p>
+      <div class=\"feature-card reveal\">
+        <div class=\"feature-icon-wrap\">
+          <div class=\"feature-num\">03</div>
+          <i class=\"fa-solid fa-calendar-days feature-icon\"></i>
+        </div>
+        <div class=\"feature-title\" data-i18n=\"f3.title\">Takvim & Hatırlatıcı</div>
+        <p class=\"feature-desc\" data-i18n=\"f3.desc\">Google Calendar ve Microsoft To-Do entegrasyonu. Randevu ekle, sil, sorgula.</p>
       </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">04</div>
-        <div class="feature-title">WhatsApp Mesajlaşma</div>
-        <p class="feature-desc">Sesle WhatsApp mesajı gönder. "Anneme iyi geceler yaz" — gönderildi.</p>
+      <div class=\"feature-card reveal\">
+        <div class=\"feature-icon-wrap\">
+          <div class=\"feature-num\">04</div>
+          <i class=\"fa-brands fa-whatsapp feature-icon\"></i>
+        </div>
+        <div class=\"feature-title\" data-i18n=\"f4.title\">WhatsApp Mesajlaşma</div>
+        <p class=\"feature-desc\" data-i18n=\"f4.desc\">Sesle WhatsApp mesajı gönder. \"Anneme iyi geceler yaz\" — gönderildi.</p>
       </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">05</div>
-        <div class="feature-title">Hava Durumu</div>
-        <p class="feature-desc">Anlık hava durumu sorgulama. İstanbul ve istediğiniz şehir için.</p>
+      <div class=\"feature-card reveal\">
+        <div class=\"feature-icon-wrap\">
+          <div class=\"feature-num\">05</div>
+          <i class=\"fa-solid fa-cloud-sun feature-icon\"></i>
+        </div>
+        <div class=\"feature-title\" data-i18n=\"f5.title\">Hava Durumu</div>
+        <p class=\"feature-desc\" data-i18n=\"f5.desc\">Anlık hava durumu sorgulama. İstanbul ve istediğiniz şehir için.</p>
       </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">06</div>
-        <div class="feature-title">Ekran Analizi</div>
-        <p class="feature-desc">Aktif pencerenin ekran görüntüsünü alıp AI ile analiz eder. "Bu hatayı oku."</p>
+      <div class=\"feature-card reveal\">
+        <div class=\"feature-icon-wrap\">
+          <div class=\"feature-num\">06</div>
+          <i class=\"fa-solid fa-eye feature-icon\"></i>
+        </div>
+        <div class=\"feature-title\" data-i18n=\"f6.title\">Ekran Analizi</div>
+        <p class=\"feature-desc\" data-i18n=\"f6.desc\">Aktif pencerenin ekran görüntüsünü alıp AI ile analiz eder. \"Bu hatayı oku.\"</p>
       </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">07</div>
-        <div class="feature-title">Medya Kontrolü</div>
-        <p class="feature-desc">YouTube veya Spotify'da şarkı çal. "Daft Punk çal" — çalıyor.</p>
+      <div class=\"feature-card reveal\">
+        <div class=\"feature-icon-wrap\">
+          <div class=\"feature-num\">07</div>
+          <i class=\"fa-solid fa-music feature-icon\"></i>
+        </div>
+        <div class=\"feature-title\" data-i18n=\"f7.title\">Medya Kontrolü</div>
+        <p class=\"feature-desc\" data-i18n=\"f7.desc\">YouTube veya Spotify'da şarkı çal. \"Daft Punk çal\" — çalıyor.</p>
       </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">08</div>
-        <div class="feature-title">Kalıcı Hafıza</div>
-        <p class="feature-desc">Öğrendiklerini hatırlar. İsminizi, tercihlerinizi, projelerinizi kaydeder.</p>
+      <div class=\"feature-card reveal\">
+        <div class=\"feature-icon-wrap\">
+          <div class=\"feature-num\">08</div>
+          <i class=\"fa-solid fa-brain feature-icon\"></i>
+        </div>
+        <div class=\"feature-title\" data-i18n=\"f8.title\">Kalıcı Hafıza</div>
+        <p class=\"feature-desc\" data-i18n=\"f8.desc\">Öğrendiklerini hatırlar. İsminizi, tercihlerinizi, projelerinizi kaydeder.</p>
       </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">09</div>
-        <div class="feature-title">Sistem Bilgisi</div>
-        <p class="feature-desc">Pil, CPU, RAM, disk, ağ durumu — anlık sistem raporu sesle.</p>
+      <div class=\"feature-card reveal\">
+        <div class=\"feature-icon-wrap\">
+          <div class=\"feature-num\">09</div>
+          <i class=\"fa-solid fa-microchip feature-icon\"></i>
+        </div>
+        <div class=\"feature-title\" data-i18n=\"f9.title\">Sistem Bilgisi</div>
+        <p class=\"feature-desc\" data-i18n=\"f9.desc\">Pil, CPU, RAM, disk, ağ durumu — anlık sistem raporu sesle.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VOICE COMMANDS -->
+<section id=\"voice\" style=\"padding-top: 0;\">
+  <div class=\"max-w\">
+    <div class=\"section-tag reveal\">// <span data-i18n=\"voice.tag\">Komut Örnekleri</span></div>
+    <h2 class=\"section-title reveal\" data-i18n=\"voice.title\">Şunu Söyleyin.</h2>
+    <p class=\"section-desc reveal\" data-i18n=\"voice.desc\">
+      Sadece konuşun. JARVIS anlar, harekete geçer, sonucu söyler.
+      İşte deneyebileceğiniz örnekler.
+    </p>
+
+    <div class=\"voice-commands\">
+      <div class=\"vc-card reveal\">
+        <div class=\"vc-mic\"><i class=\"fa-solid fa-microphone\"></i></div>
+        <div class=\"vc-content\">
+          <div class=\"vc-label\" data-i18n=\"voice.cmd\">Komut</div>
+          <div class=\"vc-text\" data-i18n=\"vc1.text\">\"Jarvis, Spotify'da Daft Punk çal\"</div>
+          <div class=\"vc-result\" data-i18n=\"vc1.result\">→ Spotify açılır, Daft Punk çalmaya başlar.</div>
+        </div>
+      </div>
+      <div class=\"vc-card reveal\">
+        <div class=\"vc-mic\"><i class=\"fa-solid fa-microphone\"></i></div>
+        <div class=\"vc-content\">
+          <div class=\"vc-label\" data-i18n=\"voice.cmd\">Komut</div>
+          <div class=\"vc-text\" data-i18n=\"vc2.text\">\"İstanbul'da hava nasıl?\"</div>
+          <div class=\"vc-result\" data-i18n=\"vc2.result\">→ \"Şu an 18°C, parçalı bulutlu efendim.\"</div>
+        </div>
+      </div>
+      <div class=\"vc-card reveal\">
+        <div class=\"vc-mic\"><i class=\"fa-solid fa-microphone\"></i></div>
+        <div class=\"vc-content\">
+          <div class=\"vc-label\" data-i18n=\"voice.cmd\">Komut</div>
+          <div class=\"vc-text\" data-i18n=\"vc3.text\">\"Yarın saat 3'e diş randevusu ekle\"</div>
+          <div class=\"vc-result\" data-i18n=\"vc3.result\">→ Google Calendar'a etkinlik eklendi.</div>
+        </div>
+      </div>
+      <div class=\"vc-card reveal\">
+        <div class=\"vc-mic\"><i class=\"fa-solid fa-microphone\"></i></div>
+        <div class=\"vc-content\">
+          <div class=\"vc-label\" data-i18n=\"voice.cmd\">Komut</div>
+          <div class=\"vc-text\" data-i18n=\"vc4.text\">\"Anneme 'iyi geceler' mesajı at\"</div>
+          <div class=\"vc-result\" data-i18n=\"vc4.result\">→ WhatsApp Desktop üzerinden mesaj gönderildi.</div>
+        </div>
+      </div>
+      <div class=\"vc-card reveal\">
+        <div class=\"vc-mic\"><i class=\"fa-solid fa-microphone\"></i></div>
+        <div class=\"vc-content\">
+          <div class=\"vc-label\" data-i18n=\"voice.cmd\">Komut</div>
+          <div class=\"vc-text\" data-i18n=\"vc5.text\">\"Şu ekranı analiz et\"</div>
+          <div class=\"vc-result\" data-i18n=\"vc5.result\">→ Ekran görüntüsü alınır, Gemini Vision yorumlar.</div>
+        </div>
+      </div>
+      <div class=\"vc-card reveal\">
+        <div class=\"vc-mic\"><i class=\"fa-solid fa-microphone\"></i></div>
+        <div class=\"vc-content\">
+          <div class=\"vc-label\" data-i18n=\"voice.cmd\">Komut</div>
+          <div class=\"vc-text\" data-i18n=\"vc6.text\">\"Pil durumum ne?\"</div>
+          <div class=\"vc-result\" data-i18n=\"vc6.result\">→ \"Pil %78, şarj olmuyor efendim.\"</div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- DEMO -->
-<section id="demo" style="padding-top: 0;">
-  <div class="max-w">
-    <div class="section-tag reveal">// Arayüz</div>
-    <h2 class="section-title reveal">JARVIS HUD</h2>
-    <p class="section-desc reveal">
+<section id=\"demo\" style=\"padding-top: 0;\">
+  <div class=\"max-w\">
+    <div class=\"section-tag reveal\">// <span data-i18n=\"demo.tag\">Arayüz</span></div>
+    <h2 class=\"section-title reveal\" data-i18n=\"demo.title\">JARVIS HUD</h2>
+    <p class=\"section-desc reveal\" data-i18n=\"demo.desc\">
       Iron Man'den ilham alan sinematik arayüz.
       Dönen halkalar, radar tarama, nabız animasyonu.
     </p>
 
-    <div class="demo-wrap reveal">
-      <div class="demo-topbar">
-        <div class="dot dot-red"></div>
-        <div class="dot dot-yellow"></div>
-        <div class="dot dot-green"></div>
-        <span class="demo-topbar-title">JARVIS — WINDOWS v1.0</span>
+    <div class=\"demo-wrap reveal\">
+      <div class=\"demo-topbar\">
+        <div class=\"dot dot-red\"></div>
+        <div class=\"dot dot-yellow\"></div>
+        <div class=\"dot dot-green\"></div>
+        <span class=\"demo-topbar-title\">JARVIS — WINDOWS v1.3</span>
+        <span class=\"demo-status\" data-i18n=\"demo.status\">ÇEVRİMİÇİ</span>
       </div>
-      <div class="demo-screen">
-        <div class="demo-scan"></div>
-        <div class="demo-hud">
-          <div class="demo-ring2"></div>
-          <div class="demo-ring1"></div>
-          <div class="demo-orb"></div>
+      <div class=\"demo-screen\">
+        <div class=\"demo-scan\"></div>
+        <div class=\"demo-stats-row\">
+          <span>CPU: 12%</span>
+          <span>MEM: 1.4GB</span>
+          <span>NET: 84ms</span>
+          <span>AUDIO: 16kHz</span>
         </div>
-        <div class="demo-corner demo-corner-tl"></div>
-        <div class="demo-corner demo-corner-tr"></div>
-        <div class="demo-corner demo-corner-bl"></div>
-        <div class="demo-corner demo-corner-br"></div>
-        <div class="demo-label">SYSTEM ACTIVE — LISTENING</div>
+        <div class=\"demo-hud\">
+          <div class=\"demo-ring2\"></div>
+          <div class=\"demo-ring1\"></div>
+          <div class=\"demo-orb\"></div>
+        </div>
+        <div class=\"demo-corner demo-corner-tl\"></div>
+        <div class=\"demo-corner demo-corner-tr\"></div>
+        <div class=\"demo-corner demo-corner-bl\"></div>
+        <div class=\"demo-corner demo-corner-br\"></div>
+        <div class=\"demo-label\" data-i18n=\"demo.listening\">SYSTEM ACTIVE — LISTENING</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALL STEPS -->
+<section id=\"install\" style=\"padding-top: 0;\">
+  <div class=\"max-w\">
+    <div class=\"section-tag reveal\">// <span data-i18n=\"install.tag\">Kurulum</span></div>
+    <h2 class=\"section-title reveal\" data-i18n=\"install.title\">4 Adımda Hazır</h2>
+    <p class=\"section-desc reveal\" data-i18n=\"install.desc\">
+      Kurulum yok, derleme yok. Sadece indir, API anahtarını gir, başla.
+    </p>
+
+    <div class=\"steps-grid\">
+      <div class=\"step-card reveal\">
+        <div class=\"step-number\">01</div>
+        <div class=\"step-title\" data-i18n=\"s1.title\">Dosyayı İndir</div>
+        <p class=\"step-desc\" data-i18n=\"s1.desc\">Aşağıdaki butondan <code>jarvis.exe</code> dosyasını indirin. Sadece 64-bit Windows 10/11 destekler.</p>
+      </div>
+      <div class=\"step-card reveal\">
+        <div class=\"step-number\">02</div>
+        <div class=\"step-title\" data-i18n=\"s2.title\">API Anahtarı Al</div>
+        <p class=\"step-desc\" data-i18n-html=\"s2.desc\"><a href=\"https://aistudio.google.com/apikey\" target=\"_blank\">aistudio.google.com</a> adresinden ücretsiz Gemini API anahtarı oluştur.</p>
+      </div>
+      <div class=\"step-card reveal\">
+        <div class=\"step-number\">03</div>
+        <div class=\"step-title\" data-i18n=\"s3.title\">Anahtarı Gir</div>
+        <p class=\"step-desc\" data-i18n=\"s3.desc\">Programı ilk açtığında karşına çıkan kutuya API anahtarını yapıştır ve kaydet.</p>
+      </div>
+      <div class=\"step-card reveal\">
+        <div class=\"step-number\">04</div>
+        <div class=\"step-title\" data-i18n=\"s4.title\">Konuş!</div>
+        <p class=\"step-desc\" data-i18n=\"s4.desc\">Mikrofon iznini onayla. \"Jarvis\" diye seslen ve istediğini söyle. Hepsi bu.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- TECH STACK -->
-<section style="padding-top: 0;">
-  <div class="max-w">
-    <div class="section-tag reveal">// Teknoloji</div>
-    <h2 class="section-title reveal">Altında Neler Çalışıyor</h2>
-    <div class="tech-grid reveal">
-      <div class="tech-pill">Python 3.11+</div>
-      <div class="tech-pill">Google Gemini 2.5 Flash</div>
-      <div class="tech-pill">Gemini Live API</div>
-      <div class="tech-pill">Tkinter HUD</div>
-      <div class="tech-pill">PyAudio</div>
-      <div class="tech-pill">Google Calendar API</div>
-      <div class="tech-pill">Microsoft To-Do</div>
-      <div class="tech-pill">YouTube Data API</div>
-      <div class="tech-pill">WhatsApp Desktop</div>
-      <div class="tech-pill">PyInstaller</div>
-      <div class="tech-pill">Windows 10 / 11</div>
+<section style=\"padding-top: 0;\">
+  <div class=\"max-w\">
+    <div class=\"section-tag reveal\">// <span data-i18n=\"tech.tag\">Teknoloji</span></div>
+    <h2 class=\"section-title reveal\" data-i18n=\"tech.title\">Altında Neler Çalışıyor</h2>
+    <div class=\"tech-grid reveal\">
+      <div class=\"tech-pill\"><i class=\"fa-brands fa-python\"></i> Python 3.11+</div>
+      <div class=\"tech-pill\"><i class=\"fa-solid fa-robot\"></i> Gemini 2.5 Flash</div>
+      <div class=\"tech-pill\"><i class=\"fa-solid fa-wave-square\"></i> Gemini Live API</div>
+      <div class=\"tech-pill\"><i class=\"fa-solid fa-display\"></i> Tkinter HUD</div>
+      <div class=\"tech-pill\"><i class=\"fa-solid fa-microphone-lines\"></i> PyAudio</div>
+      <div class=\"tech-pill\"><i class=\"fa-brands fa-google\"></i> Google Calendar</div>
+      <div class=\"tech-pill\"><i class=\"fa-brands fa-microsoft\"></i> Microsoft To-Do</div>
+      <div class=\"tech-pill\"><i class=\"fa-brands fa-youtube\"></i> YouTube Data API</div>
+      <div class=\"tech-pill\"><i class=\"fa-brands fa-whatsapp\"></i> WhatsApp Desktop</div>
+      <div class=\"tech-pill\"><i class=\"fa-solid fa-box\"></i> PyInstaller</div>
+      <div class=\"tech-pill\"><i class=\"fa-brands fa-windows\"></i> Windows 10 / 11</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id=\"faq\" style=\"padding-top: 0;\">
+  <div class=\"max-w\" style=\"max-width: 880px;\">
+    <div class=\"section-tag reveal\">// <span data-i18n=\"faq.tag\">Sıkça Sorulanlar</span></div>
+    <h2 class=\"section-title reveal\" data-i18n=\"faq.title\">Aklınızdaki Sorular</h2>
+
+    <div class=\"faq-list\">
+      <div class=\"faq-item reveal\">
+        <button class=\"faq-q\" data-i18n=\"faq.q1\">JARVIS gerçekten ücretsiz mi?</button>
+        <div class=\"faq-a\" data-i18n=\"faq.a1\">Evet, JARVIS tamamen ücretsiz. Sadece Google'dan ücretsiz bir Gemini API anahtarı almanız yeterli — Gemini'nin günlük ücretsiz kotası gündelik kullanım için fazlasıyla yeterli.</div>
+      </div>
+      <div class=\"faq-item reveal\">
+        <button class=\"faq-q\" data-i18n=\"faq.q2\">Mac veya Linux'ta çalışır mı?</button>
+        <div class=\"faq-a\" data-i18n=\"faq.a2\">Şu an yalnızca Windows 10 ve 11 (64-bit) için derlenmiş bir sürüm var. Mac/Linux için planlanan bir sürüm henüz yok.</div>
+      </div>
+      <div class=\"faq-item reveal\">
+        <button class=\"faq-q\" data-i18n=\"faq.q3\">Verilerim nereye gidiyor?</button>
+        <div class=\"faq-a\" data-i18n=\"faq.a3\">Sesiniz ve metinleriniz yalnızca Google Gemini API'sine gönderilir. Hiçbir sunucu, hiçbir log toplama yok. Tüm hafıza yerel olarak bilgisayarınızda saklanır.</div>
+      </div>
+      <div class=\"faq-item reveal\">
+        <button class=\"faq-q\" data-i18n=\"faq.q4\">Antivirüs uyarı veriyor, güvenli mi?</button>
+        <div class=\"faq-a\" data-i18n=\"faq.a4\">PyInstaller ile derlenen .exe dosyaları bazı antivirüs programlarında false positive verir. Kod açık kaynak — kaynak koddan kendiniz de derleyebilirsiniz. Güvenli olduğundan eminseniz istisnaya ekleyin.</div>
+      </div>
+      <div class=\"faq-item reveal\">
+        <button class=\"faq-q\" data-i18n=\"faq.q5\">Çevrimdışı çalışır mı?</button>
+        <div class=\"faq-a\" data-i18n=\"faq.a5\">Hayır. Gemini AI'ya bağlanması gerektiği için aktif internet bağlantısı şart. Bazı sistem komutları (pil, hava durumu hariç) internet olmadan da çalışır.</div>
+      </div>
+      <div class=\"faq-item reveal\">
+        <button class=\"faq-q\" data-i18n=\"faq.q6\">Mikrofon her zaman dinliyor mu?</button>
+        <div class=\"faq-a\" data-i18n=\"faq.a6\">Yalnızca siz uygulamayı çalıştırdığınızda dinler. İstediğiniz zaman kapatabilirsiniz. Hiçbir ses arka planda kaydedilmez veya gönderilmez.</div>
+      </div>
+      <div class=\"faq-item reveal\">
+        <button class=\"faq-q\" data-i18n=\"faq.q7\">Hata aldım, ne yapmalıyım?</button>
+        <div class=\"faq-a\" data-i18n=\"faq.a7\">İletişim bölümünden Instagram üzerinden ulaşabilirsiniz. Hatanın ekran görüntüsü ve ne yaptığınızı yazarsanız daha hızlı yardımcı olabilirim.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHANGELOG -->
+<section id=\"changelog\" style=\"padding-top: 0;\">
+  <div class=\"max-w\" style=\"max-width: 880px;\">
+    <div class=\"section-tag reveal\">// <span data-i18n=\"changelog.tag\">Sürüm Geçmişi</span></div>
+    <h2 class=\"section-title reveal\" data-i18n=\"changelog.title\">Yenilikler</h2>
+
+    <div class=\"changelog-list\">
+      <div class=\"cl-item reveal\">
+        <span class=\"cl-version\">v1.3</span>
+        <span class=\"cl-date\" data-i18n=\"cl.now\">SON SÜRÜM</span>
+        <ul class=\"cl-list\">
+          <li data-i18n=\"cl.v13.1\">Gemini 2.5 Flash entegrasyonu — daha hızlı ve doğru yanıtlar</li>
+          <li data-i18n=\"cl.v13.2\">Ekran analizi (Vision) özelliği eklendi</li>
+          <li data-i18n=\"cl.v13.3\">WhatsApp mesaj gönderimi iyileştirildi</li>
+          <li data-i18n=\"cl.v13.4\">Kalıcı hafıza sistemi (öğrendiklerini hatırlar)</li>
+        </ul>
+      </div>
+      <div class=\"cl-item reveal\">
+        <span class=\"cl-version\">v1.2</span>
+        <span class=\"cl-date\">2025</span>
+        <ul class=\"cl-list\">
+          <li data-i18n=\"cl.v12.1\">Google Calendar & Microsoft To-Do entegrasyonu</li>
+          <li data-i18n=\"cl.v12.2\">YouTube Data API ile şarkı çalma</li>
+          <li data-i18n=\"cl.v12.3\">Sistem raporu (CPU, RAM, pil) komutları</li>
+        </ul>
+      </div>
+      <div class=\"cl-item reveal\">
+        <span class=\"cl-version\">v1.1</span>
+        <span class=\"cl-date\">2025</span>
+        <ul class=\"cl-list\">
+          <li data-i18n=\"cl.v11.1\">HUD arayüzü (Iron Man tarzı) yeniden tasarlandı</li>
+          <li data-i18n=\"cl.v11.2\">Hava durumu ve uygulama açma komutları</li>
+        </ul>
+      </div>
+      <div class=\"cl-item reveal\">
+        <span class=\"cl-version\">v1.0</span>
+        <span class=\"cl-date\">2025</span>
+        <ul class=\"cl-list\">
+          <li data-i18n=\"cl.v10.1\">İlk sürüm — Sesli komut + Gemini AI temel mimarisi</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- DOWNLOAD -->
-<section id="download">
-  <div class="max-w">
-    <div class="download-box reveal">
-      <div class="section-tag">// İndir</div>
-      <div class="download-title">JARVIS'i İndir</div>
-      <p class="download-desc">
+<section id=\"download\">
+  <div class=\"max-w\">
+    <div class=\"download-box reveal\">
+      <div class=\"download-corners\"><span></span><span></span></div>
+      <div class=\"section-tag\">// <span data-i18n=\"download.tag\">İndir</span></div>
+      <div class=\"download-title\" data-i18n=\"download.title\">JARVIS'i İndir</div>
+      <p class=\"download-desc\" data-i18n=\"download.desc\">
         Tek dosya. Kurulum yok. API anahtarını gir, başla.
       </p>
-      <a href="https://github.com/arbeya123/jarvis-windows/releases/download/v1.3/jarvis.exe" class="btn btn-primary" style="font-size: 15px; padding: 18px 48px;" download>
-        ↓ &nbsp; jarvis.exe — Windows
+      <a href=\"https://github.com/arbeya123/jarvis-windows/releases/download/v1.3/jarvis.exe\" class=\"btn btn-primary\" style=\"font-size: 15px; padding: 18px 48px;\" download data-testid=\"download-exe-btn\">
+        <i class=\"fa-solid fa-download\"></i>
+        <span>jarvis.exe — Windows</span>
       </a>
-      <div class="download-meta">
-        <div class="download-meta-item">Windows 10 / 11</div>
-        <div class="download-meta-item">64-bit</div>
-        <div class="download-meta-item">Gemini API Key Gerekli</div>
-        <div class="download-meta-item">Ücretsiz</div>
+      <div class=\"download-meta\">
+        <div class=\"download-meta-item\">Windows 10 / 11</div>
+        <div class=\"download-meta-item\">64-bit</div>
+        <div class=\"download-meta-item\" data-i18n=\"download.key\">Gemini API Key Gerekli</div>
+        <div class=\"download-meta-item\" data-i18n=\"download.free\">Ücretsiz</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id=\"contact\" style=\"padding-top: 0;\">
+  <div class=\"max-w\">
+    <div class=\"section-tag reveal\">// <span data-i18n=\"contact.tag\">İletişim</span></div>
+    <h2 class=\"section-title reveal\" data-i18n=\"contact.title\">Bana Ulaşın</h2>
+    <p class=\"section-desc reveal\" data-i18n=\"contact.desc\">
+      Hata bildirimi, özellik önerisi veya sadece selam vermek için —
+      aşağıdaki kanallardan birinden yazabilirsiniz.
+    </p>
+
+    <div class=\"contact-grid\">
+      <a href=\"https://instagram.com/aras_berkkkkkk\" target=\"_blank\" class=\"contact-card reveal\" data-testid=\"contact-instagram\">
+        <div class=\"contact-icon\"><i class=\"fa-brands fa-instagram\"></i></div>
+        <div class=\"contact-title\">Instagram</div>
+        <div class=\"contact-handle\">@aras_berkkkkkk</div>
+      </a>
+      <a href=\"https://github.com/arbeya123\" target=\"_blank\" class=\"contact-card reveal\" data-testid=\"contact-github\">
+        <div class=\"contact-icon\"><i class=\"fa-brands fa-github\"></i></div>
+        <div class=\"contact-title\">GitHub</div>
+        <div class=\"contact-handle\">@arbeya123</div>
+      </a>
+      <a href=\"https://github.com/arbeya123/jarvis-windows/issues\" target=\"_blank\" class=\"contact-card reveal\" data-testid=\"contact-issues\">
+        <div class=\"contact-icon\"><i class=\"fa-solid fa-bug\"></i></div>
+        <div class=\"contact-title\" data-i18n=\"contact.bug\">Hata Bildir</div>
+        <div class=\"contact-handle\" data-i18n=\"contact.issues\">GitHub Issues</div>
+      </a>
+      <a href=\"mailto:arasberkk@gmail.com\" class=\"contact-card reveal\" data-testid=\"contact-email\">
+        <div class=\"contact-icon\"><i class=\"fa-solid fa-envelope\"></i></div>
+        <div class=\"contact-title\" data-i18n=\"contact.email\">E-posta</div>
+        <div class=\"contact-handle\">arasberkk@gmail.com</div>
+      </a>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">JARVIS</div>
-  <div class="footer-credit">
-    Aras Berk Yalabık tarafından yapıldı &nbsp;·&nbsp;
-    <a href="https://instagram.com/aras_berkkkkkk" target="_blank">@aras_berkkkkkk</a>
+  <div class=\"footer-logo\">JARVIS</div>
+  <div class=\"footer-tagline\" data-i18n=\"footer.tagline\">Just A Rather Very Intelligent System</div>
+
+  <div class=\"footer-socials\">
+    <a href=\"https://instagram.com/aras_berkkkkkk\" target=\"_blank\" aria-label=\"Instagram\"><i class=\"fa-brands fa-instagram\"></i></a>
+    <a href=\"https://github.com/arbeya123\" target=\"_blank\" aria-label=\"GitHub\"><i class=\"fa-brands fa-github\"></i></a>
+    <a href=\"mailto:arasberkk@gmail.com\" aria-label=\"Email\"><i class=\"fa-solid fa-envelope\"></i></a>
   </div>
-  <div class="footer-copy">
-    © 2026 — Tüm hakları saklıdır.
+
+  <div class=\"footer-credit\">
+    <span data-i18n=\"footer.credit\">Aras Berk Yalabık tarafından yapıldı</span> &nbsp;·&nbsp;
+    <a href=\"https://instagram.com/aras_berkkkkkk\" target=\"_blank\">@aras_berkkkkkk</a>
+  </div>
+  <div class=\"footer-copy\">
+    © 2026 — <span data-i18n=\"footer.rights\">Tüm hakları saklıdır.</span>
   </div>
 </footer>
 
+<button class=\"to-top\" id=\"toTop\" aria-label=\"Yukarı çık\" data-testid=\"to-top-btn\">
+  <i class=\"fa-solid fa-arrow-up\"></i>
+</button>
+
 <script>
+  /* ─── i18n DICTIONARY ─── */
+  const i18n = {
+    tr: {
+      'nav.sub': 'BY ARAS BERK YALABIK',
+      'nav.features': 'Özellikler',
+      'nav.voice': 'Komutlar',
+      'nav.install': 'Kurulum',
+      'nav.faq': 'SSS',
+      'nav.changelog': 'Sürümler',
+      'nav.contact': 'İletişim',
+      'nav.download': 'İndir',
+      'hero.tag': 'AI Asistan Sistemi — v1.3',
+      'hero.desc': 'Windows üzerinde çalışan, sesli komutlarla kontrol edilen, yapay zeka destekli kişisel asistan. Gerçek zamanlı. Akıllı. Güçlü.',
+      'hero.btnDownload': 'İndir — Windows',
+      'hero.btnFeatures': 'Özellikleri Gör',
+      'stats.tools': 'Entegre Araç',
+      'stats.engine': 'AI Motoru',
+      'stats.listening': 'Aktif Dinleme',
+      'stats.lang': 'Türkçe Destek',
+      'features.tag': 'Yetenekler',
+      'features.title': 'Tam Kontrol.<br>Tek Sesle.',
+      'features.desc': 'JARVIS yalnızca bir chatbot değil. Bilgisayarınızı, takviminizi, müziğinizi ve daha fazlasını sesli komutlarla yönetir.',
+      'f1.title': 'Sesli Komut', 'f1.desc': 'Gerçek zamanlı ses akışı. Mikrofonu açın, konuşun — JARVIS sizi duyuyor.',
+      'f2.title': 'Uygulama Kontrolü', 'f2.desc': \"Spotify, Chrome, VS Code, Terminal — herhangi bir uygulamayı sesle açın.\",
+      'f3.title': 'Takvim & Hatırlatıcı', 'f3.desc': 'Google Calendar ve Microsoft To-Do entegrasyonu. Randevu ekle, sil, sorgula.',
+      'f4.title': 'WhatsApp Mesajlaşma', 'f4.desc': 'Sesle WhatsApp mesajı gönder. \"Anneme iyi geceler yaz\" — gönderildi.',
+      'f5.title': 'Hava Durumu', 'f5.desc': 'Anlık hava durumu sorgulama. İstanbul ve istediğiniz şehir için.',
+      'f6.title': 'Ekran Analizi', 'f6.desc': 'Aktif pencerenin ekran görüntüsünü alıp AI ile analiz eder. \"Bu hatayı oku.\"',
+      'f7.title': 'Medya Kontrolü', 'f7.desc': 'YouTube veya Spotify\'da şarkı çal. \"Daft Punk çal\" — çalıyor.',
+      'f8.title': 'Kalıcı Hafıza', 'f8.desc': 'Öğrendiklerini hatırlar. İsminizi, tercihlerinizi, projelerinizi kaydeder.',
+      'f9.title': 'Sistem Bilgisi', 'f9.desc': 'Pil, CPU, RAM, disk, ağ durumu — anlık sistem raporu sesle.',
+      'voice.tag': 'Komut Örnekleri', 'voice.title': 'Şunu Söyleyin.', 'voice.cmd': 'Komut',
+      'voice.desc': 'Sadece konuşun. JARVIS anlar, harekete geçer, sonucu söyler. İşte deneyebileceğiniz örnekler.',
+      'vc1.text': '\"Jarvis, Spotify\'da Daft Punk çal\"', 'vc1.result': '→ Spotify açılır, Daft Punk çalmaya başlar.',
+      'vc2.text': '\"İstanbul\'da hava nasıl?\"', 'vc2.result': '→ \"Şu an 18°C, parçalı bulutlu efendim.\"',
+      'vc3.text': '\"Yarın saat 3\'e diş randevusu ekle\"', 'vc3.result': '→ Google Calendar\'a etkinlik eklendi.',
+      'vc4.text': '\"Anneme \'iyi geceler\' mesajı at\"', 'vc4.result': '→ WhatsApp Desktop üzerinden mesaj gönderildi.',
+      'vc5.text': '\"Şu ekranı analiz et\"', 'vc5.result': '→ Ekran görüntüsü alınır, Gemini Vision yorumlar.',
+      'vc6.text': '\"Pil durumum ne?\"', 'vc6.result': '→ \"Pil %78, şarj olmuyor efendim.\"',
+      'demo.tag': 'Arayüz', 'demo.title': 'JARVIS HUD',
+      'demo.desc': 'Iron Man\'den ilham alan sinematik arayüz. Dönen halkalar, radar tarama, nabız animasyonu.',
+      'demo.status': 'ÇEVRİMİÇİ', 'demo.listening': 'SISTEM AKTIF — DINLIYOR',
+      'install.tag': 'Kurulum', 'install.title': '4 Adımda Hazır',
+      'install.desc': 'Kurulum yok, derleme yok. Sadece indir, API anahtarını gir, başla.',
+      's1.title': 'Dosyayı İndir', 's1.desc': 'Aşağıdaki butondan jarvis.exe dosyasını indirin. Sadece 64-bit Windows 10/11 destekler.',
+      's2.title': 'API Anahtarı Al', 's2.desc': '<a href=\"https://aistudio.google.com/apikey\" target=\"_blank\">aistudio.google.com</a> adresinden ücretsiz Gemini API anahtarı oluştur.',
+      's3.title': 'Anahtarı Gir', 's3.desc': 'Programı ilk açtığında karşına çıkan kutuya API anahtarını yapıştır ve kaydet.',
+      's4.title': 'Konuş!', 's4.desc': 'Mikrofon iznini onayla. \"Jarvis\" diye seslen ve istediğini söyle. Hepsi bu.',
+      'tech.tag': 'Teknoloji', 'tech.title': 'Altında Neler Çalışıyor',
+      'faq.tag': 'Sıkça Sorulanlar', 'faq.title': 'Aklınızdaki Sorular',
+      'faq.q1': 'JARVIS gerçekten ücretsiz mi?',
+      'faq.a1': \"Evet, JARVIS tamamen ücretsiz. Sadece Google'dan ücretsiz bir Gemini API anahtarı almanız yeterli — Gemini'nin günlük ücretsiz kotası gündelik kullanım için fazlasıyla yeterli.\",
+      'faq.q2': \"Mac veya Linux'ta çalışır mı?\",
+      'faq.a2': 'Şu an yalnızca Windows 10 ve 11 (64-bit) için derlenmiş bir sürüm var. Mac/Linux için planlanan bir sürüm henüz yok.',
+      'faq.q3': 'Verilerim nereye gidiyor?',
+      'faq.a3': \"Sesiniz ve metinleriniz yalnızca Google Gemini API'sine gönderilir. Hiçbir sunucu, hiçbir log toplama yok. Tüm hafıza yerel olarak bilgisayarınızda saklanır.\",
+      'faq.q4': 'Antivirüs uyarı veriyor, güvenli mi?',
+      'faq.a4': 'PyInstaller ile derlenen .exe dosyaları bazı antivirüs programlarında false positive verir. Kod açık kaynak — kaynak koddan kendiniz de derleyebilirsiniz. Güvenli olduğundan eminseniz istisnaya ekleyin.',
+      'faq.q5': 'Çevrimdışı çalışır mı?',
+      'faq.a5': \"Hayır. Gemini AI'ya bağlanması gerektiği için aktif internet bağlantısı şart. Bazı sistem komutları (pil hariç) internet olmadan da çalışır.\",
+      'faq.q6': 'Mikrofon her zaman dinliyor mu?',
+      'faq.a6': 'Yalnızca siz uygulamayı çalıştırdığınızda dinler. İstediğiniz zaman kapatabilirsiniz. Hiçbir ses arka planda kaydedilmez veya gönderilmez.',
+      'faq.q7': 'Hata aldım, ne yapmalıyım?',
+      'faq.a7': 'İletişim bölümünden Instagram üzerinden ulaşabilirsiniz. Hatanın ekran görüntüsü ve ne yaptığınızı yazarsanız daha hızlı yardımcı olabilirim.',
+      'changelog.tag': 'Sürüm Geçmişi', 'changelog.title': 'Yenilikler', 'cl.now': 'SON SÜRÜM',
+      'cl.v13.1': 'Gemini 2.5 Flash entegrasyonu — daha hızlı ve doğru yanıtlar',
+      'cl.v13.2': 'Ekran analizi (Vision) özelliği eklendi',
+      'cl.v13.3': 'WhatsApp mesaj gönderimi iyileştirildi',
+      'cl.v13.4': 'Kalıcı hafıza sistemi (öğrendiklerini hatırlar)',
+      'cl.v12.1': 'Google Calendar & Microsoft To-Do entegrasyonu',
+      'cl.v12.2': 'YouTube Data API ile şarkı çalma',
+      'cl.v12.3': 'Sistem raporu (CPU, RAM, pil) komutları',
+      'cl.v11.1': 'HUD arayüzü (Iron Man tarzı) yeniden tasarlandı',
+      'cl.v11.2': 'Hava durumu ve uygulama açma komutları',
+      'cl.v10.1': 'İlk sürüm — Sesli komut + Gemini AI temel mimarisi',
+      'download.tag': 'İndir', 'download.title': \"JARVIS'i İndir\",
+      'download.desc': 'Tek dosya. Kurulum yok. API anahtarını gir, başla.',
+      'download.key': 'Gemini API Key Gerekli', 'download.free': 'Ücretsiz',
+      'contact.tag': 'İletişim', 'contact.title': 'Bana Ulaşın',
+      'contact.desc': 'Hata bildirimi, özellik önerisi veya sadece selam vermek için — aşağıdaki kanallardan birinden yazabilirsiniz.',
+      'contact.bug': 'Hata Bildir', 'contact.issues': 'GitHub Issues', 'contact.email': 'E-posta',
+      'footer.tagline': 'Just A Rather Very Intelligent System',
+      'footer.credit': 'Aras Berk Yalabık tarafından yapıldı',
+      'footer.rights': 'Tüm hakları saklıdır.'
+    },
+    en: {
+      'nav.sub': 'BY ARAS BERK YALABIK',
+      'nav.features': 'Features', 'nav.voice': 'Commands', 'nav.install': 'Install',
+      'nav.faq': 'FAQ', 'nav.changelog': 'Changelog', 'nav.contact': 'Contact', 'nav.download': 'Download',
+      'hero.tag': 'AI Assistant System — v1.3',
+      'hero.desc': 'A voice-controlled, AI-powered personal assistant that runs on Windows. Real-time. Smart. Powerful.',
+      'hero.btnDownload': 'Download — Windows', 'hero.btnFeatures': 'View Features',
+      'stats.tools': 'Integrated Tools', 'stats.engine': 'AI Engine',
+      'stats.listening': 'Active Listening', 'stats.lang': 'Multi-Language',
+      'features.tag': 'Capabilities',
+      'features.title': 'Full Control.<br>One Voice.',
+      'features.desc': 'JARVIS is not just a chatbot. It manages your computer, calendar, music and more — all by voice.',
+      'f1.title': 'Voice Command', 'f1.desc': 'Real-time audio streaming. Turn on the mic, speak — JARVIS hears you.',
+      'f2.title': 'App Control', 'f2.desc': 'Spotify, Chrome, VS Code, Terminal — open any app with your voice.',
+      'f3.title': 'Calendar & Reminders', 'f3.desc': 'Google Calendar and Microsoft To-Do integration. Add, delete, query events.',
+      'f4.title': 'WhatsApp Messaging', 'f4.desc': 'Send WhatsApp messages by voice. \"Tell mom good night\" — sent.',
+      'f5.title': 'Weather', 'f5.desc': 'Live weather queries for Istanbul or any city you want.',
+      'f6.title': 'Screen Analysis', 'f6.desc': 'Takes a screenshot of the active window and analyzes it with AI. \"Read this error.\"',
+      'f7.title': 'Media Control', 'f7.desc': 'Play tracks on YouTube or Spotify. \"Play Daft Punk\" — playing.',
+      'f8.title': 'Persistent Memory', 'f8.desc': 'Remembers what it learns. Stores your name, preferences, projects.',
+      'f9.title': 'System Info', 'f9.desc': 'Battery, CPU, RAM, disk, network — instant system report by voice.',
+      'voice.tag': 'Command Examples', 'voice.title': 'Just Say It.', 'voice.cmd': 'Command',
+      'voice.desc': 'Just speak. JARVIS understands, takes action, and tells you the result. Here are examples you can try.',
+      'vc1.text': '\"Jarvis, play Daft Punk on Spotify\"', 'vc1.result': '→ Spotify opens, Daft Punk starts playing.',
+      'vc2.text': '\"What\'s the weather in Istanbul?\"', 'vc2.result': '→ \"It\'s 18°C, partly cloudy, sir.\"',
+      'vc3.text': '\"Add a dentist appointment tomorrow at 3\"', 'vc3.result': '→ Event added to Google Calendar.',
+      'vc4.text': '\"Send mom a \'good night\' message\"', 'vc4.result': '→ Message sent via WhatsApp Desktop.',
+      'vc5.text': '\"Analyze this screen\"', 'vc5.result': '→ Screenshot is taken, Gemini Vision interprets it.',
+      'vc6.text': '\"What\'s my battery status?\"', 'vc6.result': '→ \"Battery 78%, not charging, sir.\"',
+      'demo.tag': 'Interface', 'demo.title': 'JARVIS HUD',
+      'demo.desc': 'Cinematic interface inspired by Iron Man. Rotating rings, radar sweep, pulse animation.',
+      'demo.status': 'ONLINE', 'demo.listening': 'SYSTEM ACTIVE — LISTENING',
+      'install.tag': 'Install', 'install.title': 'Ready in 4 Steps',
+      'install.desc': 'No setup, no build. Just download, paste your API key, start.',
+      's1.title': 'Download the File', 's1.desc': 'Click the button below to download jarvis.exe. Supports 64-bit Windows 10/11 only.',
+      's2.title': 'Get an API Key', 's2.desc': 'Create a free Gemini API key at <a href=\"https://aistudio.google.com/apikey\" target=\"_blank\">aistudio.google.com</a>.',
+      's3.title': 'Enter the Key', 's3.desc': 'Paste your API key into the box that appears on first launch and save.',
+      's4.title': 'Speak!', 's4.desc': 'Allow microphone access. Say \"Jarvis\" and tell it what you want. That\'s all.',
+      'tech.tag': 'Tech', 'tech.title': 'What\'s Under the Hood',
+      'faq.tag': 'FAQ', 'faq.title': 'Frequently Asked',
+      'faq.q1': 'Is JARVIS really free?',
+      'faq.a1': \"Yes, JARVIS is completely free. You only need a free Gemini API key from Google — Gemini's daily free quota is more than enough for everyday use.\",
+      'faq.q2': 'Does it work on Mac or Linux?',
+      'faq.a2': 'Currently only Windows 10 and 11 (64-bit) builds are available. No Mac/Linux build is planned yet.',
+      'faq.q3': 'Where does my data go?',
+      'faq.a3': 'Your voice and text are only sent to the Google Gemini API. No servers, no logs. All memory is stored locally on your computer.',
+      'faq.q4': 'My antivirus warns, is it safe?',
+      'faq.a4': 'PyInstaller-built .exe files cause false positives on some antivirus tools. The code is open source — you can also build it yourself. If you trust it, add it to exceptions.',
+      'faq.q5': 'Does it work offline?',
+      'faq.a5': 'No. It needs an active internet connection to reach Gemini AI. Some system commands (except battery) work offline though.',
+      'faq.q6': 'Is the microphone always listening?',
+      'faq.a6': 'It only listens while you have the app running. You can stop it any time. No audio is recorded or sent in the background.',
+      'faq.q7': 'I got an error, what should I do?',
+      'faq.a7': 'You can reach me via Instagram from the contact section. A screenshot of the error and what you did helps me respond faster.',
+      'changelog.tag': 'Version History', 'changelog.title': 'What\'s New', 'cl.now': 'LATEST',
+      'cl.v13.1': 'Gemini 2.5 Flash integration — faster and more accurate answers',
+      'cl.v13.2': 'Screen analysis (Vision) feature added',
+      'cl.v13.3': 'WhatsApp message sending improved',
+      'cl.v13.4': 'Persistent memory system (remembers what it learns)',
+      'cl.v12.1': 'Google Calendar & Microsoft To-Do integration',
+      'cl.v12.2': 'Play music via YouTube Data API',
+      'cl.v12.3': 'System report commands (CPU, RAM, battery)',
+      'cl.v11.1': 'HUD interface (Iron Man style) redesigned',
+      'cl.v11.2': 'Weather and app launching commands',
+      'cl.v10.1': 'Initial release — Voice command + Gemini AI core',
+      'download.tag': 'Download', 'download.title': 'Download JARVIS',
+      'download.desc': 'Single file. No install. Paste your API key, start.',
+      'download.key': 'Gemini API Key Required', 'download.free': 'Free',
+      'contact.tag': 'Contact', 'contact.title': 'Get in Touch',
+      'contact.desc': 'For bug reports, feature requests, or just to say hi — reach out through one of the channels below.',
+      'contact.bug': 'Report a Bug', 'contact.issues': 'GitHub Issues', 'contact.email': 'Email',
+      'footer.tagline': 'Just A Rather Very Intelligent System',
+      'footer.credit': 'Made by Aras Berk Yalabık',
+      'footer.rights': 'All rights reserved.'
+    }
+  };
+
+  /* ─── LANGUAGE ─── */
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (i18n[lang][key]) el.textContent = i18n[lang][key];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.getAttribute('data-i18n-html');
+      if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
+    });
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    localStorage.setItem('jarvis-lang', lang);
+  }
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.getAttribute('data-lang')));
+  });
+  const savedLang = localStorage.getItem('jarvis-lang') || 'tr';
+  applyLang(savedLang);
+
+  /* ─── REVEAL ON SCROLL ─── */
   const reveals = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -949,7 +2040,102 @@
     });
   }, { threshold: 0.12 });
   reveals.forEach(el => obs.observe(el));
+
+  /* ─── ANIMATED COUNTERS ─── */
+  const counters = document.querySelectorAll('[data-count]');
+  const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target;
+        const target = parseInt(el.getAttribute('data-count'));
+        const suffix = el.getAttribute('data-suffix') || '';
+        const dur = 1400;
+        const startT = performance.now();
+        function tick(now) {
+          const p = Math.min(1, (now - startT) / dur);
+          const val = Math.floor(p * target);
+          el.textContent = val + suffix;
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        counterObs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.4 });
+  counters.forEach(el => counterObs.observe(el));
+
+  /* ─── FAQ ─── */
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const btn = item.querySelector('.faq-q');
+    btn.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  /* ─── BACK TO TOP ─── */
+  const toTop = document.getElementById('toTop');
+  window.addEventListener('scroll', () => {
+    toTop.classList.toggle('show', window.scrollY > 500);
+  }, { passive: true });
+  toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  /* ─── MOBILE MENU ─── */
+  const burger = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+  function toggleMenu(state) {
+    const open = typeof state === 'boolean' ? state : !mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open', open);
+    mobileOverlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  burger.addEventListener('click', () => toggleMenu());
+  mobileOverlay.addEventListener('click', () => toggleMenu(false));
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+
+  /* ─── CURSOR GLOW (desktop only) ─── */
+  const cursorGlow = document.getElementById('cursorGlow');
+  if (window.matchMedia('(pointer:fine)').matches) {
+    document.addEventListener('mousemove', (e) => {
+      cursorGlow.style.left = e.clientX + 'px';
+      cursorGlow.style.top = e.clientY + 'px';
+    });
+  } else {
+    cursorGlow.style.display = 'none';
+  }
+
+  /* ─── HERO SUBTITLE TYPEWRITER ─── */
+  const typer = document.getElementById('typer');
+  const phrasesTR = ['Just A Rather Very Intelligent System', 'Sesli AI Asistan', 'Windows için JARVIS', 'Gemini destekli'];
+  const phrasesEN = ['Just A Rather Very Intelligent System', 'Voice AI Assistant', 'JARVIS for Windows', 'Powered by Gemini'];
+  let pIdx = 0, cIdx = 0, deleting = false;
+  function typeLoop() {
+    const list = (localStorage.getItem('jarvis-lang') === 'en') ? phrasesEN : phrasesTR;
+    const phrase = list[pIdx % list.length];
+    if (!deleting) {
+      cIdx++;
+      typer.textContent = phrase.slice(0, cIdx);
+      if (cIdx === phrase.length) {
+        deleting = true;
+        setTimeout(typeLoop, 2200);
+        return;
+      }
+    } else {
+      cIdx--;
+      typer.textContent = phrase.slice(0, cIdx);
+      if (cIdx === 0) {
+        deleting = false;
+        pIdx++;
+      }
+    }
+    setTimeout(typeLoop, deleting ? 30 : 60);
+  }
+  setTimeout(typeLoop, 1800);
 </script>
 
 </body>
 </html>
+"
+Observation: Create successful: /app/index.html
